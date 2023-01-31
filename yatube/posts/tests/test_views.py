@@ -36,7 +36,7 @@ class PostViewsTest(TestCase):
                 group=cls.group,
                 text='Тестовый пост',
             )
-            sleep(0.001)
+            sleep(0.1)
 
         cls.post = Post.objects.create(
             author=cls.user,
