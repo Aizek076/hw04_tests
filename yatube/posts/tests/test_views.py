@@ -30,23 +30,23 @@ class PostViewsTest(TestCase):
             slug='test_slug_3',
             description='Тестовое описание',
         )
+        cls.post_2 = Post.objects.create(
+            author=cls.user,
+            text='Тестовый пост',
+            group=cls.group_2,
+        )
         for i in range(12):
             Post.objects.create(
                 author=cls.user,
                 group=cls.group,
                 text='Тестовый пост',
             )
-            sleep(0.1)
+            sleep(0.001)
 
         cls.post = Post.objects.create(
             author=cls.user,
             text='Тестовый пост',
             group=cls.group,
-        )
-        cls.post_2 = Post.objects.create(
-            author=cls.user,
-            text='Тестовый пост',
-            group=cls.group_2,
         )
 
     def setUp(self):
