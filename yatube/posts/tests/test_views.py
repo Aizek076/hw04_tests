@@ -18,25 +18,10 @@ class PostViewsTest(TestCase):
             slug='test_slug',
             description='Тестовое описание',
         )
-        cls.group_2 = Group.objects.create(
-            title='Тестовая группа_2',
-            slug='test_slug_2',
-            description='Тестовое описание',
-        )
-        cls.group_3 = Group.objects.create(
-            title='Тестовая группа_3',
-            slug='test_slug_3',
-            description='Тестовое описание',
-        )
         cls.post = Post.objects.create(
             author=cls.user,
             text='Тестовый пост',
             group=cls.group,
-        )
-        cls.post_2 = Post.objects.create(
-            author=cls.user,
-            text='Тестовый пост',
-            group=cls.group_2,
         )
 
     def setUp(self):
@@ -125,9 +110,9 @@ class PostViewsTest(TestCase):
         """Проверка созданного поста на принадлежащую группу"""
         response = self.authorized.get(reverse(
             'posts:group_list',
-            kwargs={'slug': PostViewsTest.group_2.slug}))
+            kwargs={'slug': PostViewsTest.group.slug}))
         first_object = response.context['page_obj'][0]
-        self.assertEqual(first_object, PostViewsTest.post_2)
+        self.assertEqual(first_object, PostViewsTest.post)
 
 
 class PaginatorTest(TestCase):
@@ -164,8 +149,6 @@ class PaginatorTest(TestCase):
         ]
         for page in templates_page_names:
             with self.subTest(page=page):
-                # response_1 = self.authorized.get(page)
-                # response_2 = self.authorized.get(page + '?page=2')
                 self.assertEqual(len(self.authorized.get(
                     page).context.get('page_obj')),
                     posts_on_first_page)
